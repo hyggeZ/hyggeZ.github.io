@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>二、 输入输出 | hyggeZ</title><link rel="stylesheet" href="../styles.css"></head><body><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>hyggeZ · Go 笔记</span></a><nav class="top-actions"><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button">☾</button></nav></header><aside class="sidebar"><p class="eyebrow">Go 学习路径</p><a class="" href="chapter-00.html">〇、 语言结构</a><a class="" href="chapter-01.html">一、 变量声明（静态语言）</a><a class="active" href="chapter-02.html">二、 输入输出</a><a class="" href="chapter-03.html">三、 数据类型</a><a class="" href="chapter-04.html">四、派生数据类型</a><a class="" href="chapter-05.html">五、语句</a><a class="" href="chapter-06.html">六、函数</a><a class="" href="chapter-07.html">七、结构体与方法</a><a class="" href="chapter-08.html">八、接口</a><a class="" href="chapter-09.html">九、协程</a><a class="" href="chapter-10.html">十、线程安全</a></aside><main id="top"><article><header class="chapter-hero"><p class="section-number">CHAPTER 02</p><h1>二、 输入输出</h1></header>
+<h2>1. 输出：fmt包</h2>
+<h3>（1）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Print(&quot;Hello,&quot;) // 直接输出不换行</code></pre></div>
+<h3>（2）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Println(&quot;Hello!&quot;) // 末尾换行，传入多参数输出时中间会自动加空格</code></pre></div>
+<h3>（3）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Printf(&quot;Name: %s, Age: %d\n&quot;, name, age) // 格式化输出，占位符控制输出格式</code></pre></div>
+<h3>（4）Sprint家族，将内容赋值给变量。常用于拼接不同类型的字符串，生成动态信息。</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">msg := fmt.Sprintf(&quot;年龄是: %d&quot;, 18)
+return fmt.Errorf(&quot;未成年禁止访问，当前年龄为: %d&quot;, age)</code></pre></div>
+<h2>2. 输入：fmt包</h2>
+<p>fmt 的扫描函数在读取变量时，必须传入变量的指针（加上 &amp;），以便修改变量的值。变量需要提前定义。</p>
+<h3>（1）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Scan 读取以空格或换行分隔的值，直到填满所有接收参数</code></pre></div>
+<h3>（2）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Scanln 读取以空格分隔的值，但遇到换行符会立即停止</code></pre></div>
+<h3>（3）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">fmt.Scanf 通过格式化模版读取输入</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">_, err := fmt.Scanln(&amp;name, &amp;age)</code></pre></div>
+<p>返回值为成功读取的变量个数，读取中的错误。“_”可以把不用的变量丢掉。后面接：</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">if err != nil {
+    fmt.Println(&quot;输入有误，请重新输入！错误原因:&quot;, err)
+    return
+}</code></pre></div>
+<h2>3. 占位符</h2>
+<p class="placeholder-item">（1）%d十进制整数</p>
+<p class="placeholder-item">（2）%s字符串</p>
+<p class="placeholder-item">（3）%t布尔值</p>
+<p class="placeholder-item">（4）%f小数%.2f 两位小数</p>
+<p class="placeholder-item">（5）%T类型fmt.Printf(&quot;%T\n&quot;, 3.14) // 输出: float64</p>
+<p class="placeholder-item">（6）%v任意类型%+v 会打印结构体字段名%#v 详细打印（可用于空字符串，会显示””而不是空白）</p><nav class="pager"><a href=chapter-01.html>← 上一章</a><a href=chapter-03.html>下一章 →</a></nav><footer class="article-footer"><span>Go 学习笔记</span><a href="#top">返回顶部 ↑</a></footer></article></main><script src="../script.js"></script></body></html>

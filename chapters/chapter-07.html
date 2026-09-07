@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>七、结构体与方法 | hyggeZ</title><link rel="stylesheet" href="../styles.css"></head><body><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>hyggeZ · Go 笔记</span></a><nav class="top-actions"><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button">☾</button></nav></header><aside class="sidebar"><p class="eyebrow">Go 学习路径</p><a class="" href="chapter-00.html">〇、 语言结构</a><a class="" href="chapter-01.html">一、 变量声明（静态语言）</a><a class="" href="chapter-02.html">二、 输入输出</a><a class="" href="chapter-03.html">三、 数据类型</a><a class="" href="chapter-04.html">四、派生数据类型</a><a class="" href="chapter-05.html">五、语句</a><a class="" href="chapter-06.html">六、函数</a><a class="active" href="chapter-07.html">七、结构体与方法</a><a class="" href="chapter-08.html">八、接口</a><a class="" href="chapter-09.html">九、协程</a><a class="" href="chapter-10.html">十、线程安全</a></aside><main id="top"><article><header class="chapter-hero"><p class="section-number">CHAPTER 07</p><h1>七、结构体与方法</h1></header>
+<h2>1. 结构体</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type 结构体名称 struct {
+    名称 类型 // 成员或属性
+}</code></pre></div>
+<h2>2. 方法 在func后加 (接收者)</h2><p>（1）值接收者 (u User)</p><p>将原结构体的所有数据复制给一个新的临时变量，方法内部修改的值不会影响原结构体</p><p>（2）指针接收者 (u *User)</p><p>只复制了原结构体的地址给指针u，取值同样用“.”，可以修改原结构体</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type User struct {
+    Name string
+    Age  int
+}
+
+func (u User) UpdateAgeValue(newAge int) { u.Age = newAge }
+func (u *User) UpdateAgePointer(newAge int) { u.Age = newAge }</code></pre></div>
+<p>语法糖：mainUser是普通结构体变量，不是指针，但能直接调用指针接收者方法。反之亦然，结构体指针也可以直接调用值接受者方法。</p>
+<h2>3. 结构体组合代替继承</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type People struct { // 父类
+    Time string
+}
+
+func (p People) Info() { // 父类的方法
+    fmt.Println(&quot;people &quot;, p.Time)
+}
+
+type Student struct { // 子类
+    People // 子类结构体包含匿名父类
+    Name string
+}
+
+func main() {
+    p := People{Time: &quot;2026-7-19&quot;}
+    s := Student{
+        People: p,
+        Name: &quot;aaa&quot;,
+    }
+    s.Info() // 子类可以调用父类方法
+    fmt.Println(s.Time) // 将 s.People.Time 省略（名字不冲突前提下）
+}</code></pre></div>
+<h2>4. 结构体标签和JSON</h2><p>（1）JSON文本：{"name": "aaa", "age": 18}</p><p>JSON字段通常是小写驼峰，但Go的结构体字段首字母必须大写才能被外面的包访问。为解决这个问题，创造了结构体标签。</p><p>（2）结构体标签</p><p>紧跟在字段类型后面、用反引号 ` 包裹。格式为 键:“值”，如果是给JSON库看的，键就是json。注意：冒号后不能有空格。</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type User struct {
+    Name string `json:&quot;name&quot;`
+    Age  int    `json:&quot;age&quot;`
+}</code></pre></div>
+<p>`json:"-"` 忽略字段，`json:"age,omitempty"` 忽略空值</p>
+<h2>5. 自定义数据类型</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type Code int</code></pre></div>
+<h2>6. 类型别名，不能绑定方法，和原始类型可以直接转换</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type MyCode = int</code></pre></div><nav class="pager"><a href=chapter-06.html>← 上一章</a><a href=chapter-08.html>下一章 →</a></nav><footer class="article-footer"><span>Go 学习笔记</span><a href="#top">返回顶部 ↑</a></footer></article></main><script src="../script.js"></script></body></html>

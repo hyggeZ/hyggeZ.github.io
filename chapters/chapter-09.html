@@ -1,0 +1,68 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>九、协程 | hyggeZ</title><link rel="stylesheet" href="../styles.css"></head><body><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>hyggeZ · Go 笔记</span></a><nav class="top-actions"><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button">☾</button></nav></header><aside class="sidebar"><p class="eyebrow">Go 学习路径</p><a class="" href="chapter-00.html">〇、 语言结构</a><a class="" href="chapter-01.html">一、 变量声明（静态语言）</a><a class="" href="chapter-02.html">二、 输入输出</a><a class="" href="chapter-03.html">三、 数据类型</a><a class="" href="chapter-04.html">四、派生数据类型</a><a class="" href="chapter-05.html">五、语句</a><a class="" href="chapter-06.html">六、函数</a><a class="" href="chapter-07.html">七、结构体与方法</a><a class="" href="chapter-08.html">八、接口</a><a class="active" href="chapter-09.html">九、协程</a><a class="" href="chapter-10.html">十、线程安全</a></aside><main id="top"><article><header class="chapter-hero"><p class="section-number">CHAPTER 09</p><h1>九、协程</h1></header>
+<p>是用户级线程，在任何普通函数调用前加 go 关键字。因为主线程结束协程自动结束，所以需要等待协程</p>
+<h2>1. sync.WaitGroup  协程计数器</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var wg = sync.WaitGroup{}// 可以var wg sync.WaitGroup
+wg.Add()  wg.Done()  wg.Wait()</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">func worker(id int, wg *sync.WaitGroup) {
+    defer wg.Done()
+    fmt.Printf(&quot;工人 %d 开始干活...\n&quot;, id)
+}
+
+func main() {
+    var wg sync.WaitGroup
+    for i := 1; i &lt;= 3; i++ {
+        wg.Add(1)
+        go worker(i, &amp;wg)
+    }
+    wg.Wait()
+    fmt.Println(&quot;所有工人干完活了，主程序安全退出。&quot;)
+}</code></pre></div>
+<h2>2. channel 通道</h2>
+<p>是一个线程安全的，自带阻塞锁和等待队列的物理管道</p>
+<h3>（1）创建管道，必须用make函数初始化</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">ch := make(chan int)    // 创建一个只能传递 int 类型的管道
+chStr := make(chan string) // 创建一个只能传递 string 类型的管道
+ch := make(chan int, 3) // 创建一个容量为 3 的有缓冲通道</code></pre></div>
+<h3>（2）发送数据 管道 &lt;- 数据</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">ch &lt;- 42 // 把数字 42 推进 ch 管道</code></pre></div>
+<h3>（3）接收数据 变量 &lt;- 管道</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">result := &lt;-ch  // 从 ch 管道里捞出一个数据，赋值给 result</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">func worker(id int, ch chan int, wg *sync.WaitGroup) {
+    defer wg.Done()
+    time.Sleep(time.Duration(id*100) * time.Millisecond)
+    result := id*10 + 5
+    ch &lt;- result
+    fmt.Printf(&quot;工人 %d：把结果 %d 扔进了通道\n&quot;, id, result)
+}</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">func main() {
+    ch := make(chan int, 5)
+    var wg sync.WaitGroup
+    for i := 1; i &lt;= 3; i++ {
+        wg.Add(1)
+        go worker(i, ch, &amp;wg)
+    }
+    go func() {
+        wg.Wait()
+        close(ch)
+    }()
+    for val := range ch {
+        fmt.Printf(&quot;成功捞出数据：%d\n&quot;, val)
+    }
+}</code></pre></div>
+<h2>3. select 多路复用监听器</h2>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">func taskOne(ch1 chan string) {
+    time.Sleep(2 * time.Second)
+    ch1 &lt;- &quot;来自任务一的数据&quot;
+}
+func taskTwo(ch2 chan string) {
+    time.Sleep(1 * time.Second)
+    ch2 &lt;- &quot;来自任务二的数据&quot;
+}
+
+select {
+    case res1 := &lt;-ch1:
+    fmt.Println(&quot;抓取到分支一：&quot;, res1)
+    case res2 := &lt;-ch2:
+    fmt.Println(&quot;抓取到分支二：&quot;, res2)
+}</code></pre></div>
+<p>select语句只执行一次，如果需要无限循环，要套一个for循环</p><nav class="pager"><a href=chapter-08.html>← 上一章</a><a href=chapter-10.html>下一章 →</a></nav><footer class="article-footer"><span>Go 学习笔记</span><a href="#top">返回顶部 ↑</a></footer></article></main><script src="../script.js"></script></body></html>

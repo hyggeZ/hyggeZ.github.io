@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>三、 数据类型 | hyggeZ</title><link rel="stylesheet" href="../styles.css"></head><body><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>hyggeZ · Go 笔记</span></a><nav class="top-actions"><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button">☾</button></nav></header><aside class="sidebar"><p class="eyebrow">Go 学习路径</p><a class="" href="chapter-00.html">〇、 语言结构</a><a class="" href="chapter-01.html">一、 变量声明（静态语言）</a><a class="" href="chapter-02.html">二、 输入输出</a><a class="active" href="chapter-03.html">三、 数据类型</a><a class="" href="chapter-04.html">四、派生数据类型</a><a class="" href="chapter-05.html">五、语句</a><a class="" href="chapter-06.html">六、函数</a><a class="" href="chapter-07.html">七、结构体与方法</a><a class="" href="chapter-08.html">八、接口</a><a class="" href="chapter-09.html">九、协程</a><a class="" href="chapter-10.html">十、线程安全</a></aside><main id="top"><article><header class="chapter-hero"><p class="section-number">CHAPTER 03</p><h1>三、 数据类型</h1></header>
+<h2>1. 整数型</h2>
+<p>默认数字是int型。uint表示无符号数。uint8表示8位无符号数，= byte。</p>
+<h2>2. 浮点型</h2>
+<p>float32 float64默认后者</p>
+<h2>3. 字符型 ‘ ’</h2>
+<h3>（1）单字节 byte</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var a byte = ‘a’
+fmt.Printf ( “%c %d”,a,a )//输出 a 97</code></pre></div>
+<h3>（2）多字节 rune</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var b rune = ‘中’
+fmt.Printf ( “%c %d”,b,b )//输出 中 20013</code></pre></div>
+<h2>4. 字符串 string  “ ”</h2>
+<h3>（1）转义字符</h3>
+<p>\t制表符\n换行符\”双引号\r回到行首\\反斜杠</p>
+<h3>（2）多行字符串 ` `</h3>
+<p>多行字符串里 转义字符会原样输出</p>
+<h2>5. 布尔类型 bool</h2>
+<p>true，false。默认false。不能和其他类型转换，不能做数值运算</p>
+<h2>6. 零值问题</h2>
+<h3>（1）int0float640.0</h3>
+<h3>（2）boolfalse</h3>
+<h3>（3）string“”</h3>
+<h3>（4）指针nil</h3>
+<h2>7. string的本质</h2>
+<h3>（1）string的头结构</h3>
+<p>任何string变量声明时，都会在栈上分配16字节的固定空间，底层是一个包含两个字段的隐式结构体</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">// 这就是 Go 运行时中 string 的本质形态
+type StringHeader struct {
+    Data uintptr // 8 字节：一个指针，指向真正存放字符数据的底层字节数组
+    Len  int     // 8 字节：一个整数，记录字符串包含的字节长度
+}</code></pre></div>
+<div class="code-card"><div class="code-head"><span>原理说明</span><button class="copy" type="button">复制</button></div><pre><code class="language-text">栈内存（s 变量本体，固定 16 字节）
+├── Data（底层数组指针）
+└── Len（字节长度 = 5）
+        ↓
+只读数据段（分配在堆或只读内存区）</code></pre></div><nav class="pager"><a href=chapter-02.html>← 上一章</a><a href=chapter-04.html>下一章 →</a></nav><footer class="article-footer"><span>Go 学习笔记</span><a href="#top">返回顶部 ↑</a></footer></article></main><script src="../script.js"></script></body></html>

@@ -1,0 +1,68 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>四、派生数据类型 | hyggeZ</title><link rel="stylesheet" href="../styles.css"></head><body><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">G</span><span>hyggeZ · Go 笔记</span></a><nav class="top-actions"><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button">☾</button></nav></header><aside class="sidebar"><p class="eyebrow">Go 学习路径</p><a class="" href="chapter-00.html">〇、 语言结构</a><a class="" href="chapter-01.html">一、 变量声明（静态语言）</a><a class="" href="chapter-02.html">二、 输入输出</a><a class="" href="chapter-03.html">三、 数据类型</a><a class="active" href="chapter-04.html">四、派生数据类型</a><a class="" href="chapter-05.html">五、语句</a><a class="" href="chapter-06.html">六、函数</a><a class="" href="chapter-07.html">七、结构体与方法</a><a class="" href="chapter-08.html">八、接口</a><a class="" href="chapter-09.html">九、协程</a><a class="" href="chapter-10.html">十、线程安全</a></aside><main id="top"><article><header class="chapter-hero"><p class="section-number">CHAPTER 04</p><h1>四、派生数据类型</h1></header>
+<h2>1. 数组</h2>
+<p>数组里的元素必须为同一类型。声明数组时，必须指定其长度或大小.</p>
+<p>Go语言数组是值类型，而不是引用类型，传递为值传递。只支持正向索引。</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var array [3]int = [3]int {1, 2, 3}</code></pre></div>
+<h2>2. 切片slice</h2>
+<p>声明后长度可变，切片变量本身在栈上占用24个字节，底层是三个字段组成的结构体</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type SliceHeader struct {
+    Data uintptr // 8 字节：指向底层连续数组成员的指针
+    Len  int     // 8 字节：当前切片已经存了多少个元素
+    Cap  int     // 8 字节：当前底层数组总共能容纳多少个元素（容量）
+}</code></pre></div>
+<p>len&lt;cap 不扩容直接写，len==cap 触发扩容，整个搬到新地址，更新len和cap</p>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var list [ ]string
+list = append(list, &quot;aaa&quot;)
+list = append(list, &quot;知道&quot;)
+list[1] = &quot;不知道&quot;//修改第2个元素</code></pre></div>
+<h3>（1）数组切片（共享内存）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">arr := [6]int{10, 20, 30, 40, 50, 60}
+s := arr[1:4] // 截取索引 1 到 3（左闭右开）（可以再加:3，表示cap=3，不污染后面数组内容）</code></pre></div>
+<p>Data 指针：指向 arr[1] 的地址，修改cap内的元素会同时修改原数组</p>
+<h3>（2）make函数（隐式创建底层数组）</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">make([]type, length, capacity)
+s := make([]int, 3, 5)</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">var nameList []string
+var nameList = []string{}
+nameList1 := []string{}
+nameList = make([]string, 0)</code></pre></div>
+<h2>3. 映射map 无序键值对的集合</h2>
+<p>引用类型，本身是8字节指针，指向堆中的运行时结构体hmap</p>
+<div class="code-card"><div class="code-head"><span>原理说明</span><button class="copy" type="button">复制</button></div><pre><code class="language-text">map 变量（8 字节指针）→ hmap 结构体 → Buckets Array
+
+单个 Bucket 内部：
+tophash: [8 个哈希高 8 位]
+keys:    [Key1, Key2, ..., Key8]
+values:  [Val1, Val2, ..., Val8]
+overflow: 指向溢出桶的指针（若超过 8 个元素）</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">// 简化版的 Go 运行时 hmap 结构体
+type hmap struct {
+    count      int
+    flags      uint8
+    B          uint8
+    noverflow  uint16
+    hash0      uint32
+    buckets    unsafe.Pointer
+    oldbuckets unsafe.Pointer
+    nevacuate  uintptr
+    extra      *mapextra
+}</code></pre></div>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">type bmap struct {
+    tophash [8]uint8 // 存储 8 个 Key 的哈希值的高 8 位（用于快速定位）
+    keys     [8]KeyType
+    values   [8]ValueType
+    overflow uintptr // 指向下一个溢出桶，用于解决哈希冲突
+}</code></pre></div>
+<div class="code-card"><div class="code-head"><span>原理说明</span><button class="copy" type="button">复制</button></div><pre><code class="language-text">读取过程：
+1. 使用 hmap.hash0（哈希种子）配合哈希算法，将 Key 映射为 64 位哈希值。
+2. 利用低位（Low bits）定位 buckets 数组中的桶。
+3. 利用高位（High bits）在桶的 tophash[8] 中比较。
+4. 对比完整 Key，匹配后通过偏移量取出 value。
+5. 桶满时申请新桶，并由 overflow 指针连接。</code></pre></div>
+<p>key必须是基本数据类型，value可以是任意类型。用前必须初始化</p>
+<p>初始化：（1）var userMap = map[int]string{ }</p>
+<h3>（2）var userMap = make(map[int]string)</h3>
+<div class="code-card"><div class="code-head"><span>Go</span><button class="copy" type="button">复制</button></div><pre><code class="language-go">make用法m := make(map[string]int, size)最多只能接收两个参数
+var userMap map[int]string = map[int]string{ 1: “张三”, 2: “李四” }
+fmt.Printf(usrMap[1])// 输出 张三
+value, ok := userMap[1]//用两个变量接收，第二个值bool类型，表示是否存在</code></pre></div><nav class="pager"><a href=chapter-03.html>← 上一章</a><a href=chapter-05.html>下一章 →</a></nav><footer class="article-footer"><span>Go 学习笔记</span><a href="#top">返回顶部 ↑</a></footer></article></main><script src="../script.js"></script></body></html>
