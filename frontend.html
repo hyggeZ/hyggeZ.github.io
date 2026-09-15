@@ -25,7 +25,7 @@
       <h2><span>一</span>DOM</h2>
       <p>DOM（Document Object Model，文档对象模型）是浏览器将 HTML 文档转换成的一组对象结构。JavaScript 不能直接修改磁盘上的 HTML 文件，因此浏览器创建 DOM，JavaScript 操作 DOM 对象后，浏览器再重新渲染页面。</p>
       <p>可以把一个 HTML 元素理解成浏览器创建的 JavaScript 对象：</p>
-      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code>const heading = {
+      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code class="language-js">const heading = {
   tagName: "h1",
   id: "title",
   innerText: "Hello",
@@ -49,9 +49,9 @@ document.getElementById("title"); // 返回一个 DOM 对象</code></pre></div>
 
       <h3>获取元素并绑定事件</h3>
       <div class="code-pair">
-        <div class="code-card"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code>&lt;h1 id="title"&gt;你好&lt;/h1&gt;
+        <div class="code-card"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code class="language-html">&lt;h1 id="title"&gt;你好&lt;/h1&gt;
 &lt;button id="btn"&gt;修改&lt;/button&gt;</code></pre></div>
-        <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code>const title = document.getElementById("title");
+        <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code class="language-js">const title = document.getElementById("title");
 const btn = document.getElementById("btn");
 
 btn.onclick = function () {
@@ -64,7 +64,7 @@ btn.onclick = function () {
       <h2><span>二</span>属性</h2>
       <h3>1. HTML 常用属性</h3>
       <p>HTML 元素可以通过属性补充标识、样式、资源地址或事件行为，基本格式如下：</p>
-      <div class="code-card compact-code"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code>&lt;tag 属性="值"&gt;&lt;/tag&gt;</code></pre></div>
+      <div class="code-card compact-code"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code class="language-html">&lt;tag 属性="值"&gt;&lt;/tag&gt;</code></pre></div>
       <ul class="method-list">
         <li><code>id</code><span>元素的唯一标识，例如 <code>&lt;div id="app"&gt;</code></span></li>
         <li><code>class</code><span>元素分类，可让多个元素共享 CSS 样式</span></li>
@@ -74,7 +74,7 @@ btn.onclick = function () {
         <li><code>value</code><span>输入元素的初始值</span></li>
       </ul>
       <p>事件既可以写在 HTML 属性中，也可以在 JavaScript 中绑定：</p>
-      <div class="code-card compact-code"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code>&lt;button onclick="sayHello()"&gt;点击&lt;/button&gt;</code></pre></div>
+      <div class="code-card compact-code"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code class="language-html">&lt;button onclick="sayHello()"&gt;点击&lt;/button&gt;</code></pre></div>
 
       <h3>2. DOM 对象属性</h3>
       <ul class="method-list">
@@ -90,7 +90,7 @@ btn.onclick = function () {
       <ul class="method-list">
         <li><code>click</code><span>鼠标点击</span></li><li><code>input</code><span>输入内容发生变化</span></li><li><code>change</code><span>表单元素的值确认改变</span></li><li><code>submit</code><span>表单提交</span></li><li><code>mouseenter / mouseleave</code><span>鼠标进入或离开元素</span></li><li><code>keydown / keyup</code><span>键盘按下或松开</span></li>
       </ul>
-      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code>input.addEventListener("input", function () {
+      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code class="language-js">input.addEventListener("input", function () {
   console.log(input.value);
 });
 
@@ -102,10 +102,10 @@ form.addEventListener("submit", function (event) {
     <section class="front-section" id="syntax">
       <h2><span>三</span>三件套语法补漏</h2>
       <h3>1. CSS 选择器</h3>
-      <div class="code-card"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code>&lt;div class="box"&gt;
+      <div class="code-card"><div class="code-head"><span>HTML</span><button class="copy" type="button">复制</button></div><pre><code class="language-html">&lt;div class="box"&gt;
   &lt;p id="title" class="text"&gt;Hello&lt;/p&gt;
 &lt;/div&gt;</code></pre></div>
-      <div class="code-card"><div class="code-head"><span>CSS</span><button class="copy" type="button">复制</button></div><pre><code>/* 标签选择器 */
+      <div class="code-card"><div class="code-head"><span>CSS</span><button class="copy" type="button">复制</button></div><pre><code class="language-css">/* 标签选择器 */
 p { }
 
 /* id 选择器 */
@@ -135,7 +135,7 @@ h1, p { }</code></pre></div>
       </ul>
       <h3>模板字符串</h3>
       <p>模板字符串使用反引号包裹，并通过 <code>${表达式}</code> 在字符串中嵌入 JavaScript 表达式。</p>
-      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code>const name = "Tom";
+      <div class="code-card"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">复制</button></div><pre><code class="language-js">const name = "Tom";
 const age = 20;
 const text = `My name is ${name}, age is ${age}`;</code></pre></div>
     </section>

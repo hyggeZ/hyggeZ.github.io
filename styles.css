@@ -76,8 +76,9 @@ body {
 
 main { margin-left:250px; padding:120px 250px 90px 80px; position:relative; }
 article { max-width:790px; margin:0 auto; }
-.chapter-hero { margin-bottom:26px; padding-bottom:20px; border-bottom:1px solid var(--line); }
-.chapter-hero h1 { font:800 clamp(34px,5vw,54px)/1.18 Inter,"PingFang SC",sans-serif; letter-spacing:.01em; }
+.chapter-hero { display:grid; grid-template-columns:auto 1fr; align-items:center; gap:16px; margin:0 0 36px; padding:0 0 24px; border-bottom:1px solid var(--line); }
+.chapter-hero .section-number { display:grid; place-items:center; width:46px; min-width:46px; height:46px; margin:0; padding:0; border-radius:13px; color:white; background:var(--green); font:800 16px/1 Inter,"PingFang SC",sans-serif; letter-spacing:0; }
+.chapter-hero h1 { margin:0; font:800 clamp(25px,3vw,34px)/1.2 Inter,"PingFang SC",sans-serif; letter-spacing:-.02em; }
 .hero { margin-bottom:90px; }
 .hero-label { display:inline-block; padding:6px 10px; border:1px solid color-mix(in srgb,var(--green) 35%,var(--line)); border-radius:7px; color:var(--green); font:700 11px/1.2 ui-monospace,monospace; letter-spacing:.12em; }
 h1 { margin:22px 0 12px; font:800 clamp(50px,8vw,88px)/1 Georgia,"Times New Roman",serif; letter-spacing:-.045em; }
@@ -103,12 +104,20 @@ p code,.steps code { padding:2px 6px; border-radius:5px; color:var(--green); bac
 .tok-type { color:#56b6c2; }
 .tok-string { color:#98c379; }
 .tok-comment { color:#7f8c84; font-style:italic; }
+.tok-tag { color:#1769aa; }
+.tok-attr { color:#8e44ad; }
+.tok-number { color:#b65d12; }
+.tok-prop { color:#087f8c; }
 :root .tok-key { color:#8e44ad; }
 :root .tok-type { color:#087f8c; }
 :root .tok-string { color:#3d7d24; }
 [data-theme="dark"] .tok-key { color:#c678dd; }
 [data-theme="dark"] .tok-type { color:#56b6c2; }
 [data-theme="dark"] .tok-string { color:#98c379; }
+[data-theme="dark"] .tok-tag { color:#61afef; }
+[data-theme="dark"] .tok-attr { color:#c678dd; }
+[data-theme="dark"] .tok-number { color:#d19a66; }
+[data-theme="dark"] .tok-prop { color:#56b6c2; }
 .mini-code { margin:0; padding:15px 18px; border-radius:10px; box-shadow:none; }
 .steps { padding:0; list-style:none; counter-reset:step; }
 .steps li { position:relative; margin:14px 0; padding:18px 20px 18px 58px; border:1px solid var(--line); border-radius:13px; background:var(--panel); }
@@ -126,6 +135,17 @@ p code,.steps code { padding:2px 6px; border-radius:5px; color:var(--green); bac
 .chapter-card span { color:var(--green); font:800 12px ui-monospace,monospace; }
 .chapter-card h2 { margin:20px 0 24px; font-size:21px; }
 .chapter-card b { color:var(--muted); font-size:12px; }
+.go-index-main { padding-top:104px; }
+.go-collection-head { margin-bottom:52px; }
+.collection-title { display:flex; align-items:center; gap:20px; }
+.collection-icon { display:grid; place-items:center; width:58px; height:58px; flex:0 0 auto; border-radius:17px; color:white; background:var(--green); font:800 17px ui-monospace,monospace; box-shadow:0 12px 30px color-mix(in srgb,var(--green) 24%,transparent); }
+.collection-title h1 { margin:0 0 7px; font:800 clamp(32px,4vw,46px)/1.1 Inter,"PingFang SC",sans-serif; letter-spacing:-.04em; }
+.collection-title p { margin:0; color:var(--muted); font-size:15px; }
+.go-collection-head .meta { margin-left:78px; margin-top:20px; }
+.go-notes-page .chapter-grid { gap:12px; }
+.go-notes-page .chapter-card { position:relative; min-height:136px; padding:22px 24px; box-shadow:none; }
+.go-notes-page .chapter-card::after { content:"↗"; position:absolute; top:22px; right:22px; color:var(--muted); font-size:15px; }
+.go-notes-page .chapter-card h2 { margin:15px 0 16px; font-size:18px; }
 .pager { display:flex; justify-content:space-between; margin-top:70px; padding-top:24px; border-top:1px solid var(--line); }
 .pager a { color:var(--green); text-decoration:none; font-weight:700; }
 .chapter { padding-top: 8px; border-top: 1px solid var(--line); }
@@ -208,4 +228,10 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
   .page-context { margin-bottom:38px; }
   .front-section > h2 { font-size:24px; }
   .method-list li { grid-template-columns:1fr; gap:5px; }
+  .go-index-main { padding-top:92px; }
+  .collection-title { align-items:flex-start; }
+  .collection-title h1 { font-size:30px; }
+  .go-collection-head .meta { margin-left:0; }
+  .chapter-hero { grid-template-columns:1fr; gap:12px; }
+  .chapter-hero .section-number { width:38px; min-width:38px; height:38px; border-radius:11px; }
 }
