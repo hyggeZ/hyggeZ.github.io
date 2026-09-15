@@ -2,9 +2,9 @@ const root = document.documentElement;
 const toggle = document.querySelector('#theme-toggle');
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) root.dataset.theme = savedTheme;
-toggle.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
+if (toggle) toggle.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
 
-toggle.addEventListener('click', () => {
+toggle?.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next;
   localStorage.setItem('theme', next);
@@ -37,5 +37,5 @@ document.querySelectorAll('code.language-go').forEach((code) => {
 const progress = document.querySelector('#progress');
 addEventListener('scroll', () => {
   const max = document.documentElement.scrollHeight - innerHeight;
-  progress.style.width = `${max ? scrollY / max * 100 : 0}%`;
+  if (progress) progress.style.width = `${max ? scrollY / max * 100 : 0}%`;
 }, { passive: true });
