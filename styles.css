@@ -191,6 +191,16 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 .card-content h3 { margin:0 0 12px; font:700 48px/1.1 Georgia,serif; letter-spacing:-.035em; }.card-content span,.card-footer { color:var(--muted); font-size:13px; }
 .card-footer { padding-top:20px; border-top:1px solid var(--line); }.card-footer strong { color:var(--green); }.future-card { opacity:.7; box-shadow:none; }
 .home-footer { display:flex; justify-content:space-between; padding:28px 0; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
+.home-footer a { color:var(--green); text-decoration:none; }
+.landing-main .hero-a { min-height:calc(100vh - 64px); }
+.notes-hub-main { width:min(1180px,calc(100% - 48px)); min-height:100vh; margin:0 auto; padding:138px 0 36px; }
+.notes-hub-head { display:grid; grid-template-columns:1fr auto; align-items:end; gap:8px 40px; margin-bottom:46px; padding-bottom:32px; border-bottom:1px solid var(--line); }
+.notes-hub-head .home-kicker { grid-column:1/-1; margin-bottom:12px; }
+.notes-hub-head h1 { margin:0; font:800 clamp(42px,6vw,68px)/1 Inter,"PingFang SC",sans-serif; letter-spacing:-.05em; }
+.notes-hub-head > p:last-child { margin:0; color:var(--muted); font-size:14px; }
+.hub-grid { grid-template-columns:1fr 1fr; }
+.hub-grid .notebook-card { min-height:380px; }
+.notes-hub-main .home-footer { margin-top:90px; }
 
 /* Home style B — an old tree, paper and time */
 .hero-b,.music-toggle { display:none; }
@@ -199,6 +209,7 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 [data-style="b"] .home-page::before { z-index:0; opacity:.22; background-image:radial-gradient(rgba(64,54,37,.2) .6px,transparent .8px); background-size:5px 5px; mask-image:none; }
 [data-style="b"] .home-topbar { height:72px; background:rgba(235,229,214,.86); border-color:rgba(73,76,59,.32); }
 [data-style="b"] .home-main { width:100%; max-width:none; padding:72px 0 0; }
+[data-style="b"] .landing-main .hero-b { min-height:calc(100vh - 72px); }
 [data-style="b"] .brand { font-family:Georgia,"Times New Roman",serif; font-size:21px; letter-spacing:.02em; }
 [data-style="b"] .brand-mark { border-radius:2px; background:#48583d; }
 [data-style="b"] .hero-a { display:none; }
@@ -223,6 +234,13 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 [data-style="b"] .language-icon { border-radius:2px; color:#eee9db; background:#58634f; }
 [data-style="b"] .card-content h3 { font-family:Georgia,"Source Han Serif SC",serif; font-size:34px; font-weight:500; }
 [data-style="b"] .home-footer { padding-inline:max(24px,calc((100vw - 1500px)/2 + 56px)); }
+[data-style="b"] .notes-hub-main { position:relative; width:min(1280px,calc(100% - 80px)); padding-top:142px; }
+[data-style="b"] .notes-hub-main::before { content:""; position:absolute; z-index:-1; top:72px; right:0; width:52%; height:280px; opacity:.14; background:url("assets/style-b-tree.png?v=20260915b") 70% 34%/cover no-repeat; mask-image:linear-gradient(90deg,transparent,black); }
+[data-style="b"] .notes-hub-head { min-height:220px; align-content:end; border-color:rgba(68,70,54,.4); }
+[data-style="b"] .notes-hub-head h1 { font-family:"Zhuque Fangsong","Source Han Serif SC","Songti SC",serif; font-size:clamp(42px,5vw,62px); font-weight:500; letter-spacing:.08em; }
+[data-style="b"] .hub-grid { gap:1px; border:1px solid var(--line); background:var(--line); }
+[data-style="b"] .hub-grid .notebook-card { min-height:340px; }
+[data-style="b"] .notes-hub-main .home-footer { padding-inline:0; }
 [data-style="b"] .music-toggle { display:flex; align-items:center; gap:7px; height:36px; padding:0 10px; border:1px solid var(--line); border-radius:2px; color:var(--text); background:rgba(240,235,222,.74); cursor:pointer; }
 [data-style="b"] #theme-toggle { display:none; }
 .music-toggle span { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; color:white; background:var(--green); font-family:serif; }
@@ -233,6 +251,8 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 @keyframes music-pulse { 50%{transform:scale(.82);opacity:.68} }
 
 @media (prefers-reduced-motion:reduce) { .b-shade,.falling-leaves i,.music-toggle span { animation:none!important; } }
+
+@media (min-width:761px) { .landing-page { overflow:hidden; } }
 
 /* Frontend notes */
 .frontend-main { padding-top:104px; }
@@ -269,15 +289,23 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
   .style-picker select { border-left:0; }
   .home-main { padding-inline:20px; }
   .home-hero { min-height:680px; display:block; padding-top:150px; }
+  .landing-main .hero-a { min-height:calc(100vh - 64px); }
   .home-hero h1 { font-size:clamp(30px,8.8vw,36px); line-height:1.22; }.home-hero h1 span { font-size:.82em; }.hero-orbit { display:none; }
   [data-style="b"] .home-main { padding-inline:0; }
-  [data-style="b"] .hero-b { min-height:680px; margin:0; border-width:0 0 1px; background-position:64% center; }
+  [data-style="b"] .hero-b,[data-style="b"] .landing-main .hero-b { min-height:calc(100vh - 64px); margin:0; border-width:0 0 1px; background-position:64% center; }
   [data-style="b"] .hero-b::after { background:linear-gradient(180deg,rgba(234,228,212,.92) 0%,rgba(234,228,212,.72) 46%,rgba(30,35,26,.12) 78%); }
   .b-intro { width:100%; padding:76px 24px 80px; }
   [data-style="b"] .hero-b h1 { max-width:480px; font-size:clamp(28px,8.3vw,37px); line-height:1.55; }
   [data-style="b"] .notes-section,[data-style="b"] .home-footer { margin-inline:0; }
   [data-style="b"] .notebook-grid { grid-template-columns:1fr; }
   .music-toggle b { display:none; }
+  .notes-hub-main,[data-style="b"] .notes-hub-main { width:auto; min-height:100vh; margin:0; padding:108px 20px 28px; }
+  .notes-hub-head { display:block; margin-bottom:28px; padding-bottom:24px; }
+  .notes-hub-head h1 { margin-bottom:14px; font-size:40px; }
+  .hub-grid { grid-template-columns:1fr; }
+  .hub-grid .notebook-card,[data-style="b"] .hub-grid .notebook-card { min-height:310px; }
+  [data-style="b"] .notes-hub-main::before { top:64px; right:-20px; width:90%; height:230px; }
+  [data-style="b"] .notes-hub-head { min-height:190px; }
   .notebook-grid { grid-template-columns:1fr; }.notebook-card { min-height:330px; }
   .section-heading { align-items:start; flex-direction:column; }.home-footer { gap:12px; flex-direction:column; }
   .frontend-main { padding-top:92px; }

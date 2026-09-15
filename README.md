@@ -9,7 +9,8 @@
 
 ## 页面结构
 
-- `index.html`：博客主页和笔记入口
+- `index.html`：A/B 风格的满屏博客首页
+- `notes.html`：独立的笔记主题目录与内容入口
 - `golang.html`：Golang 笔记目录
 - `frontend.html`：前端基础笔记
 - `chapters/`：Golang 分章节内容
