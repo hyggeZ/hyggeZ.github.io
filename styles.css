@@ -201,7 +201,7 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 [data-style="b"] .brand { font-family:Georgia,"Times New Roman",serif; font-size:21px; letter-spacing:.02em; }
 [data-style="b"] .brand-mark { border-radius:2px; background:#48583d; }
 [data-style="b"] .hero-a { display:none; }
-[data-style="b"] .hero-b { position:relative; display:block; min-height:680px; margin-top:34px; overflow:hidden; border:1px solid rgba(67,70,53,.32); background:url("assets/style-b-tree.png") center/cover no-repeat; box-shadow:0 22px 65px rgba(41,39,30,.18); isolation:isolate; }
+[data-style="b"] .hero-b { position:relative; display:block; min-height:680px; margin-top:34px; overflow:hidden; border:1px solid rgba(67,70,53,.32); background:#ded6c3 url("assets/style-b-tree.png?v=20260915b") center/cover no-repeat; box-shadow:0 22px 65px rgba(41,39,30,.18); isolation:isolate; }
 [data-style="b"] .hero-b::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(234,228,212,.98) 0%,rgba(234,228,212,.88) 27%,rgba(234,228,212,.18) 52%,transparent 72%); }
 .b-shade { position:absolute; inset:0; z-index:-2; background:linear-gradient(180deg,transparent 55%,rgba(22,28,20,.22)); animation:breathe-light 9s ease-in-out infinite alternate; }
 .b-intro { width:min(60%,680px); padding:112px 0 80px 56px; position:relative; z-index:2; }
@@ -222,6 +222,7 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 [data-style="b"] .language-icon { border-radius:2px; color:#eee9db; background:#58634f; }
 [data-style="b"] .card-content h3 { font-family:Georgia,"Source Han Serif SC",serif; font-weight:500; }
 [data-style="b"] .music-toggle { display:flex; align-items:center; gap:7px; height:36px; padding:0 10px; border:1px solid var(--line); border-radius:2px; color:var(--text); background:rgba(240,235,222,.74); cursor:pointer; }
+[data-style="b"] #theme-toggle { display:none; }
 .music-toggle span { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; color:white; background:var(--green); font-family:serif; }
 .music-toggle b { font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.08em; }
 .music-toggle[aria-pressed="true"] span { animation:music-pulse 2.4s ease-in-out infinite; }
