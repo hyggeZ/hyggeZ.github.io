@@ -1,8 +1,17 @@
 const root = document.documentElement;
 const toggle = document.querySelector('#theme-toggle');
+const styleSelect = document.querySelector('#style-select');
 const savedTheme = localStorage.getItem('theme');
+const savedStyle = localStorage.getItem('ui-style') || 'a';
 if (savedTheme) root.dataset.theme = savedTheme;
+root.dataset.style = savedStyle;
 if (toggle) toggle.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
+if (styleSelect) styleSelect.value = savedStyle;
+
+styleSelect?.addEventListener('change', () => {
+  root.dataset.style = styleSelect.value;
+  localStorage.setItem('ui-style', styleSelect.value);
+});
 
 toggle?.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
