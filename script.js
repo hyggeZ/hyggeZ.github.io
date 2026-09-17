@@ -29,7 +29,8 @@ function stopAmbient() {
 function updateMusicLabel() {
   if (!musicToggle) return;
   const playing = musicToggle.getAttribute('aria-pressed') === 'true';
-  musicToggle.querySelector('b').textContent = playing ? '正在播放' : root.dataset.style === 'b' ? '树下无声' : '静默播放';
+  musicToggle.querySelector('small').textContent = playing ? '正在播放' : root.dataset.style === 'b' ? '树下无声' : '静默播放';
+  musicToggle.querySelector('.music-control').textContent = playing ? 'Ⅱ' : '▶';
 }
 updateMusicLabel();
 

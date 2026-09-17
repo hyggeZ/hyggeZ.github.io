@@ -161,19 +161,22 @@ figcaption { margin-top:10px; color:var(--muted); text-align:center; font-size:1
 
 /* Blog home */
 @font-face { font-family:"Zhuque Editorial"; src:url("assets/fonts/ZhuqueFangsong-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:"Noto Serif Editorial"; src:url("assets/fonts/NotoSerifSC-Homepage.woff2") format("woff2"); font-weight:200 900; font-style:normal; font-display:swap; }
 [data-style="a"] { --bg:#f4f3ed; --panel:rgba(250,249,244,.88); --text:#102a22; --muted:#65776e; --line:#d4d8d0; --green:#275f4b; --green-soft:#e3ebe5; --shadow:0 16px 42px rgba(31,57,46,.1); }
-.home-page { background:var(--bg); }
-[data-style="a"] .home-page { font-family:"Zhuque Editorial","Songti SC",SimSun,serif; }
+.home-page { overflow-x:hidden; background:var(--bg); }
+[data-style="a"] .home-page { font-family:"Noto Serif Editorial","Source Han Serif SC","Songti SC",serif; font-weight:500; }
 .home-page::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.24; background-image:radial-gradient(rgba(31,72,57,.13) .55px,transparent .8px); background-size:5px 5px; }
 .home-topbar { height:78px; padding-inline:max(30px,calc((100vw - 1440px)/2)); }
 .home-main { max-width:1440px; margin:0 auto; padding:78px 40px 0; }
 .home-hero { min-height:calc(100vh - 78px); display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:60px; margin:0; }
+.hero-a { position:relative; isolation:isolate; }
+.hero-a::after { content:""; position:absolute; z-index:-1; left:-3%; right:-3%; bottom:0; height:30%; background:url("assets/style-a-mountains-v2.png") center bottom/100% auto no-repeat; opacity:.38; mix-blend-mode:multiply; pointer-events:none; }
 .home-intro { position:relative; z-index:1; }
 .home-kicker { margin:0 0 20px; color:var(--green); font:800 12px/1.2 ui-monospace,monospace; letter-spacing:.18em; }
-.home-hero h1 { max-width:720px; margin:0; font:400 clamp(40px,4vw,56px)/1.38 "Zhuque Editorial","Songti SC",SimSun,serif; letter-spacing:.015em; }
+.home-hero h1 { max-width:720px; margin:0; font:700 clamp(40px,4vw,56px)/1.32 "Noto Serif Editorial","Source Han Serif SC","Songti SC",serif; letter-spacing:.01em; }
 .home-hero h1 span { font-size:.84em; }
-.home-hero h1 em { color:var(--text); font:inherit; }
-.home-lead { max-width:570px; margin:28px 0 36px; color:var(--green); font:400 22px/1.5 "Zhuque Editorial","Songti SC",SimSun,serif; letter-spacing:.08em; }
+.home-hero h1 em { color:var(--text); font:inherit; white-space:nowrap; }
+.home-lead { max-width:570px; margin:28px 0 36px; color:var(--green); font:500 22px/1.5 "Noto Serif Editorial","Songti SC",serif; letter-spacing:.08em; }
 .primary-action { display:inline-flex; align-items:center; gap:30px; padding:13px 18px 13px 22px; border-radius:12px; color:white; background:var(--green); text-decoration:none; font-size:14px; font-weight:750; box-shadow:0 12px 30px color-mix(in srgb,var(--green) 24%,transparent); }
 .primary-action span { font-size:18px; }
 .hero-orbit { position:relative; width:min(37vw,410px); aspect-ratio:1; justify-self:center; }
@@ -182,20 +185,25 @@ figcaption { margin-top:10px; color:var(--muted); text-align:center; font-size:1
 .orbit-core { position:absolute; inset:36%; display:grid; place-items:center; border-radius:32%; color:white; background:var(--green); box-shadow:0 22px 60px color-mix(in srgb,var(--green) 32%,transparent); font:600 64px Georgia,serif; transform:rotate(-8deg); }
 .orbit-dot { position:absolute; width:16px; height:16px; border:4px solid var(--bg); border-radius:50%; background:var(--green); }
 .dot-one { left:14%; top:20%; }.dot-two { right:17%; bottom:15%; }
-.header-lyric { position:absolute; left:50%; margin:0; color:var(--green); font-family:"Zhuque Editorial","Songti SC",SimSun,serif; font-size:14px; transform:translateX(-50%); white-space:nowrap; }
+.header-lyric { position:absolute; left:47%; margin:0; color:var(--green); font-family:"Noto Serif Editorial","Songti SC",serif; font-size:13px; transform:translateX(-50%); white-space:nowrap; }
 .header-lyric span { margin-right:10px; opacity:.68; }
 .header-lyric b { font-weight:500; transition:opacity .35s ease; }
-.music-toggle { display:flex; align-items:center; gap:8px; height:38px; padding:0 12px; border:1px solid var(--line); border-radius:8px; color:var(--text); background:var(--panel); cursor:pointer; }
-.music-toggle span { display:grid; place-items:center; width:22px; height:22px; border-radius:50%; color:white; background:var(--green); font-family:serif; }
-.music-toggle b { font-size:11px; font-weight:600; }
+.music-toggle { display:grid; grid-template-columns:34px minmax(76px,1fr) 28px; align-items:center; gap:9px; width:176px; height:52px; padding:5px 8px 5px 6px; border:1px solid var(--line); border-radius:10px; color:var(--text); background:rgba(250,249,244,.9); cursor:pointer; box-shadow:0 6px 20px rgba(31,57,46,.06); text-align:left; }
+.music-cover { width:34px; height:34px; border-radius:50%; background:url("assets/style-a-arch.png") 72% 55%/220% auto no-repeat; box-shadow:inset 0 0 0 1px rgba(255,255,255,.35); }
+.music-copy { min-width:0; display:grid; gap:1px; }
+.music-copy small { color:var(--muted); font-size:8px; line-height:1; letter-spacing:.08em; }
+.music-copy b { overflow:hidden; font:600 11px/1.2 "Noto Serif Editorial","Songti SC",serif; text-overflow:ellipsis; white-space:nowrap; }
+.music-copy i { display:block; width:70%; height:2px; margin-top:3px; background:linear-gradient(90deg,var(--green) 48%,var(--line) 48%); }
+.music-control { display:grid; place-items:center; width:26px; height:26px; border:1px solid var(--green); border-radius:50%; color:var(--green); font:700 10px/1 Arial,sans-serif; }
 [data-style="a"] .home-page #theme-toggle { display:none; }
 .a-landscape { position:relative; width:min(51vw,720px); justify-self:end; }
 .a-landscape img { display:block; width:100%; height:auto; filter:drop-shadow(0 20px 28px rgba(27,53,43,.11)); }
+.a-side-note { position:absolute; right:-1%; top:38%; margin:0; padding:4px 0 4px 15px; border-left:2px solid var(--green); color:var(--green); font:500 12px/1.6 Georgia,serif; letter-spacing:.01em; }
 .a-notes-section,.fragments-section { padding:90px 0 40px; }
 .notes-anchor { display:block; scroll-margin-top:78px; }
 .a-section-head { display:flex; align-items:end; justify-content:space-between; margin-bottom:42px; }
 .a-section-head p { margin:0 0 5px; color:var(--green); font:700 12px/1.2 Georgia,serif; letter-spacing:.2em; }
-.a-section-head h2 { margin:0; font:400 46px/1.1 "Zhuque Editorial","Songti SC",SimSun,serif; letter-spacing:.04em; }
+.a-section-head h2 { margin:0; font:700 46px/1.1 "Noto Serif Editorial","Songti SC",serif; letter-spacing:.04em; }
 .a-section-head > span { color:var(--green); font:700 11px Georgia,serif; letter-spacing:.2em; }
 .book-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2.8%; min-height:clamp(380px,35vw,540px); padding-top:2%; background:url("assets/style-a-books.png") center top/100% auto no-repeat; }
 .book-card { position:relative; display:grid; grid-template-rows:1fr auto auto; justify-items:center; gap:14px; min-width:0; color:var(--text); text-decoration:none; transition:transform .28s ease; }
@@ -208,7 +216,8 @@ figcaption { margin-top:10px; color:var(--muted); text-align:center; font-size:1
 .fragments-section { padding-top:110px; }
 .fragment-list a { display:grid; grid-template-columns:130px 1fr auto 46px; align-items:center; gap:26px; min-height:72px; border-bottom:1px dotted var(--line); color:var(--text); text-decoration:none; }
 .fragment-list time { color:var(--muted); font:13px ui-monospace,monospace; }.fragment-list b { font:400 19px "Zhuque Editorial","Songti SC",serif; }.fragment-list em { padding:5px 16px; border-radius:99px; color:var(--green); background:var(--green-soft); font-size:12px; font-style:normal; }.fragment-list span { display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--green); border-radius:50%; color:var(--green); }
-.a-closing { margin:100px 0 80px; padding:0; border:0; color:var(--text); background:transparent; font:400 clamp(24px,3vw,38px)/1.7 "Zhuque Editorial","Songti SC",SimSun,serif; }
+.a-closing { position:relative; min-height:330px; margin:100px 0 0; padding:0 0 150px; overflow:visible; border:0; color:var(--text); background:transparent; font:700 clamp(24px,3vw,38px)/1.7 "Noto Serif Editorial","Songti SC",serif; }
+.a-closing::after { content:""; position:absolute; z-index:-1; left:-4%; right:-4%; bottom:-55px; height:300px; background:url("assets/style-a-mountains-v2.png") center bottom/100% auto no-repeat; opacity:.58; mix-blend-mode:multiply; pointer-events:none; }
 .notes-section { margin:0; padding:110px 0 120px; border-top:1px solid var(--line); }
 .section-heading { display:flex; align-items:end; justify-content:space-between; margin-bottom:38px; }
 .section-heading h2 { margin:0; font-size:42px; letter-spacing:-.04em; }.section-heading > p { color:var(--muted); font-size:14px; }
@@ -255,16 +264,14 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
 [data-style="b"] .language-icon { border-radius:2px; color:#eee9db; background:#58634f; }
 [data-style="b"] .card-content h3 { font-family:Georgia,"Source Han Serif SC",serif; font-size:34px; font-weight:500; }
 [data-style="b"] .home-footer { padding-inline:max(24px,calc((100vw - 1500px)/2 + 56px)); }
-[data-style="b"] .music-toggle { display:flex; align-items:center; gap:7px; height:36px; padding:0 10px; border:1px solid var(--line); border-radius:2px; color:var(--text); background:rgba(240,235,222,.74); cursor:pointer; }
+[data-style="b"] .music-toggle { border-radius:2px; color:var(--text); background:rgba(240,235,222,.74); box-shadow:none; }
 [data-style="b"] #theme-toggle { display:none; }
-.music-toggle span { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; color:white; background:var(--green); font-family:serif; }
-.music-toggle b { font-family:inherit; font-size:11px; font-weight:500; letter-spacing:.08em; }
-.music-toggle[aria-pressed="true"] span { animation:music-pulse 2.4s ease-in-out infinite; }
+.music-toggle[aria-pressed="true"] .music-cover { animation:music-pulse 2.4s ease-in-out infinite; }
 @keyframes leaf-fall { 0%{transform:translate3d(0,-20px,0) rotate(0);opacity:0} 10%{opacity:.75} 55%{transform:translate3d(52px,340px,0) rotate(220deg)} 100%{transform:translate3d(-28px,720px,0) rotate(520deg);opacity:0} }
 @keyframes breathe-light { from{opacity:.55} to{opacity:1} }
 @keyframes music-pulse { 50%{transform:scale(.82);opacity:.68} }
 
-@media (prefers-reduced-motion:reduce) { .b-shade,.falling-leaves i,.music-toggle span { animation:none!important; } }
+@media (prefers-reduced-motion:reduce) { .b-shade,.falling-leaves i,.music-cover { animation:none!important; } }
 
 /* Frontend notes */
 .frontend-main { padding-top:104px; }
@@ -306,6 +313,7 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
   .hero-a .home-intro { max-width:330px; }
   .hero-a .home-lead { font-size:18px; }
   .a-landscape { position:absolute; right:-23%; bottom:-2%; width:112%; opacity:.82; }
+  .a-side-note { display:none; }
   .a-notes-section,.fragments-section { padding:72px 0 20px; }
   .a-section-head { margin-bottom:28px; }
   .a-section-head h2 { font-size:36px; }
@@ -329,7 +337,8 @@ a.notebook-card { transition:transform .25s ease,border-color .25s ease; }a.note
   [data-style="b"] .hero-b h1 { max-width:480px; font-size:clamp(28px,8.3vw,37px); line-height:1.55; }
   [data-style="b"] .notes-section,[data-style="b"] .home-footer { margin-inline:0; }
   [data-style="b"] .notebook-grid { grid-template-columns:1fr; }
-  .music-toggle b { display:none; }
+  .music-toggle { display:flex; width:42px; height:42px; padding:4px; border-radius:50%; }
+  .music-copy,.music-control { display:none; }
   .notebook-grid { grid-template-columns:1fr; }.notebook-card { min-height:330px; }
   .section-heading { align-items:start; flex-direction:column; }.home-footer { gap:12px; flex-direction:column; }
   .frontend-main { padding-top:92px; }
