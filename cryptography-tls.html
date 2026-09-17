@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="对称加密、非对称加密、数字签名，以及 TLS 握手与 Diffie–Hellman 密钥交换学习笔记。">
+  <title>密码学与 TLS | hyggeZ</title>
+  <link rel="stylesheet" href="styles.css?v=20260917a">
+</head>
+<body class="crypto-page">
+  <header class="topbar">
+    <a class="brand" href="computer-basics.html"><span class="brand-mark">CS</span><span>hyggeZ · 计算机基础</span></a>
+    <nav class="top-actions"><a class="top-link" href="computer-basics.html">基础笔记</a><a class="top-link" href="index.html">所有笔记</a><span class="reading-progress"><span id="progress"></span></span><button id="theme-toggle" type="button" aria-label="切换深色模式">☾</button></nav>
+  </header>
+
+  <aside class="sidebar crypto-sidebar">
+    <p class="eyebrow">密码学与 TLS</p>
+    <a href="#key">一、Key（密钥）</a>
+    <a href="#symmetric">1. 对称加密</a>
+    <a href="#asymmetric">2. 非对称加密</a>
+    <a href="#signature">3. 数字签名</a>
+    <a href="#https">二、HTTPS 与 TLS</a>
+    <a href="#handshake">1. TCP / TLS 握手</a>
+    <a href="#dh">2. DH 密钥交换</a>
+    <a href="#authentication">3. 服务器身份认证</a>
+  </aside>
+
+  <main class="crypto-main" id="top"><article>
+    <header class="crypto-hero">
+      <p class="page-context">CRYPTOGRAPHY · TLS</p>
+      <h1>密码学与 TLS</h1>
+      <p>从密钥的基本用法，到 HTTPS 建立安全连接的过程。</p>
+      <div class="topic-path" aria-label="文章脉络">
+        <span>加密</span><i>→</i><span>签名</span><i>→</i><span>TLS 握手</span><i>→</i><span>共享密钥</span>
+      </div>
+    </header>
+
+    <section class="crypto-section" id="key">
+      <div class="section-title"><span>一</span><div><p>KEY</p><h2>密钥</h2></div></div>
+
+      <section class="note-block" id="symmetric">
+        <header><span class="note-index">01</span><h3>对称加密</h3><p>加密与解密使用同一个密钥</p></header>
+        <div class="flow-stack">
+          <div class="flow-row"><div class="flow-node">明文 <b>+</b> 密钥</div><div class="flow-arrow"><span>加密算法</span><b>→</b><code>E(明文, 密钥)</code></div><div class="flow-node result">密文</div></div>
+          <div class="flow-row"><div class="flow-node">密文 <b>+</b> 密钥</div><div class="flow-arrow"><span>解密算法</span><b>→</b><code>D(密文, 密钥)</code></div><div class="flow-node result">明文</div></div>
+        </div>
+        <div class="formula-card"><span>关系</span><code>D[E(明文, 密钥), 密钥] = 明文</code></div>
+      </section>
+
+      <section class="note-block" id="asymmetric">
+        <header><span class="note-index">02</span><h3>非对称加密</h3><p>一对相互关联的密钥</p></header>
+        <div class="key-pair">
+          <div><span>PK</span><strong>Public Key</strong><p>公钥 · 可公开</p></div>
+          <div><span>SK</span><strong>Private Key</strong><p>私钥 · 保密</p></div>
+        </div>
+        <div class="formula-card"><span>关系</span><code>D[SK, E(PK, 明文)] = 明文</code></div>
+        <blockquote>在没有预共享秘密的情况下建立安全关系。</blockquote>
+        <div class="party-flow"><span>A</span><p>使用 B 的 PK 加密</p><b>→</b><span>B</span><p>使用自己的 SK 解密</p></div>
+      </section>
+
+      <section class="note-block" id="signature">
+        <header><span class="note-index">03</span><h3>数字签名</h3><p>解决信息完整性与身份认证</p></header>
+        <div class="signature-grid">
+          <div class="signature-party"><span>B · 签名</span><ol><li>对消息计算 Hash，得到摘要</li><li>使用 SK 签名（signature）</li><li>发送“消息 + 签名”</li></ol></div>
+          <div class="send-arrow">发送给 A <b>→</b></div>
+          <div class="signature-party"><span>A · 验证</span><ol><li>重新计算消息 Hash</li><li>使用 signature + PK 验证</li></ol></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="crypto-section" id="https">
+      <div class="section-title"><span>二</span><div><p>HTTPS</p><h2>HTTPS 与 TLS</h2></div></div>
+      <div class="https-equation"><strong>HTTPS</strong><b>=</b><span>HTTP</span><b>+</b><span>TLS</span><small>传输层安全协议</small></div>
+
+      <section class="note-block" id="handshake">
+        <header><span class="note-index">01</span><h3>建立连接</h3><p>先进行 TCP 三次握手，再进行 TLS 握手</p></header>
+        <div class="sequence-card">
+          <div class="sequence-head"><strong>Client</strong><span>连接建立过程</span><strong>Server</strong></div>
+          <div class="sequence-phase"><span>TCP 三次握手</span></div>
+          <div class="sequence-line right"><span>SYN</span><i></i></div>
+          <div class="sequence-line left"><span>SYN + ACK</span><i></i></div>
+          <div class="sequence-line right"><span>ACK</span><i></i></div>
+          <div class="sequence-phase tls"><span>TLS 握手</span></div>
+          <div class="sequence-line right"><span>ClientHello</span><i></i></div>
+          <div class="sequence-line left"><span>ServerHello</span><i></i></div>
+          <div class="sequence-line left"><span>Certificate（含服务器公钥）</span><i></i></div>
+          <div class="sequence-line left"><span>其他握手信息</span><i></i></div>
+          <div class="sequence-complete">TLS 建立完成</div>
+          <div class="sequence-line right secure"><span>加密后的 HTTP 请求</span><i></i></div>
+        </div>
+      </section>
+
+      <section class="note-block" id="dh">
+        <header><span class="note-index">02</span><h3>Diffie–Hellman 密钥交换</h3><p>Client 与 Server 计算出相同的 Shared Secret</p></header>
+        <div class="dh-public"><span>双方事先公开参数</span><strong>p</strong><strong>g</strong></div>
+        <div class="dh-columns">
+          <div class="dh-party"><h4>Client</h4><p>生成临时 <code>SK:a</code>、<code>PK:A</code></p><p>将 <code>A</code> 发给 Server</p><div class="math"><code>A = g<sup>a</sup> mod p</code><code>S<sub>client</sub> = B<sup>a</sup> mod p</code><code>= (g<sup>b</sup>)<sup>a</sup> mod p</code></div></div>
+          <div class="dh-center"><span>A</span><i>⇄</i><span>B</span></div>
+          <div class="dh-party"><h4>Server</h4><p>生成临时 <code>SK:b</code>、<code>PK:B</code></p><p>将 <code>B</code> 发给 Client</p><div class="math"><code>B = g<sup>b</sup> mod p</code><code>S<sub>server</sub> = A<sup>b</sup> mod p</code><code>= (g<sup>a</sup>)<sup>b</sup> mod p</code></div></div>
+        </div>
+        <div class="shared-secret"><span>计算结果相等</span><strong>Shared Secret</strong><i>↓</i><b>HKDF 密钥派生</b></div>
+      </section>
+
+      <section class="note-block authentication-block" id="authentication">
+        <header><span class="note-index">03</span><h3>服务器身份认证</h3><p>Diffie–Hellman 不能防止 MITM 中间人攻击</p></header>
+        <div class="reason-chain"><div>DH 密钥交换</div><b>不能防止</b><div>MITM<br><small>中间人攻击</small></div><b>所以需要</b><div class="highlight">服务器身份认证</div></div>
+        <p class="auth-note">Server 使用长期 <code>SK</code> 签名，并将长期 <code>PK</code> 放入 Certificate，使 Client 可以进行验证。</p>
+      </section>
+    </section>
+
+    <footer class="article-footer"><span>密码学与 TLS 学习笔记</span><a href="#top">返回顶部 ↑</a></footer>
+  </article></main>
+  <script src="script.js?v=20260917a"></script>
+</body>
+</html>
