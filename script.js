@@ -12,7 +12,7 @@ if (styleSelect) styleSelect.value = savedStyle;
 styleSelect?.addEventListener('change', () => {
   root.dataset.style = styleSelect.value;
   localStorage.setItem('ui-style', styleSelect.value);
-  if (styleSelect.value !== 'b') stopAmbient();
+  updateMusicLabel();
 });
 
 let audioContext;
@@ -22,9 +22,16 @@ function stopAmbient() {
   ambientNodes = [];
   if (musicToggle) {
     musicToggle.setAttribute('aria-pressed', 'false');
-    musicToggle.querySelector('b').textContent = '树下无声';
+    updateMusicLabel();
   }
 }
+
+function updateMusicLabel() {
+  if (!musicToggle) return;
+  const playing = musicToggle.getAttribute('aria-pressed') === 'true';
+  musicToggle.querySelector('b').textContent = playing ? '正在播放' : root.dataset.style === 'b' ? '树下无声' : '静默播放';
+}
+updateMusicLabel();
 
 async function startAmbient() {
   audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
@@ -63,12 +70,33 @@ async function startAmbient() {
   ambientNodes.push(noise, filter, breeze);
 
   musicToggle.setAttribute('aria-pressed', 'true');
-  musicToggle.querySelector('b').textContent = '树下有风';
+  updateMusicLabel();
 }
 
 musicToggle?.addEventListener('click', () => {
   if (musicToggle.getAttribute('aria-pressed') === 'true') stopAmbient();
   else startAmbient();
+});
+
+const lyricLine = document.querySelector('#lyric-line');
+const lyricLines = [
+  '晨光落在窗前，风正经过山野',
+  '云从很远的地方来，又向远方去',
+  '愿每一次出发，都通向更辽阔的自己',
+  '树影缓慢移动，时间安静地生长'
+];
+let lyricIndex = 0;
+if (lyricLine) setInterval(() => {
+  lyricLine.style.opacity = '0';
+  setTimeout(() => {
+    lyricIndex = (lyricIndex + 1) % lyricLines.length;
+    lyricLine.textContent = lyricLines[lyricIndex];
+    lyricLine.style.opacity = '1';
+  }, 350);
+}, 5600);
+
+document.querySelectorAll('.empty-book').forEach((link) => {
+  link.addEventListener('click', (event) => event.preventDefault());
 });
 
 toggle?.addEventListener('click', () => {
