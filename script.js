@@ -115,6 +115,12 @@ function openNotebook(notebook, shouldScroll = true) {
     notebookDrawer.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else notebookDrawer.scrollIntoView({ block: 'center' });
 }
+function closeNotebook() {
+  if (!notebookDrawer) return;
+  notebookDrawer.hidden = true;
+  notebookSection?.classList.remove('drawer-open');
+  history.replaceState(null, '', '#notes');
+}
 document.querySelectorAll('[data-notebook]').forEach((book) => {
   book.addEventListener('click', (event) => {
     if (root.dataset.style !== 'a' || !notebookDrawer) return;
@@ -122,11 +128,7 @@ document.querySelectorAll('[data-notebook]').forEach((book) => {
     openNotebook(book.dataset.notebook);
   });
 });
-notebookDrawer?.querySelector('.drawer-close')?.addEventListener('click', () => {
-  notebookDrawer.hidden = true;
-  notebookSection?.classList.remove('drawer-open');
-  history.replaceState(null, '', '#notes');
-});
+drawerBook?.addEventListener('click', closeNotebook);
 if (location.hash.startsWith('#notebook-')) openNotebook(location.hash.replace('#notebook-', ''), false);
 
 toggle?.addEventListener('click', () => {
