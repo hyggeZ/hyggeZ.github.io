@@ -100,6 +100,35 @@ document.querySelectorAll('.empty-book').forEach((link) => {
   link.addEventListener('click', (event) => event.preventDefault());
 });
 
+const notebookDrawer = document.querySelector('#notebook-drawer');
+const notebookSection = document.querySelector('.a-notes-section');
+const drawerBook = notebookDrawer?.querySelector('.drawer-book');
+function openNotebook(notebook, shouldScroll = true) {
+  if (!notebookDrawer || !['go', 'frontend'].includes(notebook)) return;
+  notebookDrawer.hidden = false;
+  notebookSection?.classList.add('drawer-open');
+  notebookDrawer.dataset.active = notebook;
+  notebookDrawer.querySelectorAll('.drawer-panel').forEach((panel) => { panel.hidden = panel.dataset.panel !== notebook; });
+  if (drawerBook) drawerBook.querySelector('b').textContent = notebook === 'go' ? 'Golang' : '前端基础';
+  if (shouldScroll) {
+    history.replaceState(null, '', `#notebook-${notebook}`);
+    notebookDrawer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else notebookDrawer.scrollIntoView({ block: 'center' });
+}
+document.querySelectorAll('[data-notebook]').forEach((book) => {
+  book.addEventListener('click', (event) => {
+    if (root.dataset.style !== 'a' || !notebookDrawer) return;
+    event.preventDefault();
+    openNotebook(book.dataset.notebook);
+  });
+});
+notebookDrawer?.querySelector('.drawer-close')?.addEventListener('click', () => {
+  notebookDrawer.hidden = true;
+  notebookSection?.classList.remove('drawer-open');
+  history.replaceState(null, '', '#notes');
+});
+if (location.hash.startsWith('#notebook-')) openNotebook(location.hash.replace('#notebook-', ''), false);
+
 toggle?.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next;

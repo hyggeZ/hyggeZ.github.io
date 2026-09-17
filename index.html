@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="hyggeZ 的个人笔记与学习记录。"><title>hyggeZ · Notes</title><link rel="stylesheet" href="styles.css?v=20260917f">
+  <meta name="description" content="hyggeZ 的个人笔记与学习记录。"><title>hyggeZ · Notes</title><link rel="stylesheet" href="styles.css?v=20260917h">
 </head>
 <body class="home-page">
   <header class="topbar home-topbar"><a class="brand" href="index.html"><span class="brand-mark">H</span><span>hyggeZ</span></a><p class="header-lyric"><span>此刻歌词：</span><b id="lyric-line">晨光落在窗前，风正经过山野</b></p><nav class="top-actions"><a class="top-link" href="#notes">笔记</a><a class="top-link" href="https://github.com/hyggeZ" target="_blank" rel="noreferrer">GitHub ↗</a><button class="music-toggle" id="music-toggle" type="button" aria-label="播放环境音乐" aria-pressed="false"><span class="music-cover" aria-hidden="true"></span><span class="music-copy"><small>静默播放</small><b>山川之间</b><i></i></span><span class="music-control" aria-hidden="true">▶</span></button><label class="style-picker" for="style-select"><span>风格</span><select id="style-select" aria-label="选择页面风格"><option value="a">A</option><option value="b">B</option></select></label><button id="theme-toggle" type="button" aria-label="切换深色模式">☾</button></nav></header>
@@ -11,10 +11,28 @@
     <section class="home-hero hero-b"><div class="b-shade"></div><div class="b-intro"><p class="home-lead">你好，欢迎光临。</p><h1>如果有来生，要做一棵树，<br><em>站成永恒，没有悲欢的姿势。</em></h1><a class="primary-action" href="#notes">进入笔记 <span>→</span></a></div><div class="falling-leaves" aria-hidden="true"><i></i><i></i><i></i><i></i></div></section>
     <span class="notes-anchor" id="notes"></span>
     <section class="a-notes-section"><div class="a-section-head"><div><p>MAIN NOTEBOOKS</p><h2>笔记</h2></div><span>SYSTEMATIC NOTES</span></div><div class="book-grid">
-      <a class="book-card book-green" href="golang.html"><div class="book-cover"><b>Golang</b><i class="book-rings"></i></div><span>11 章</span><strong>→</strong></a>
-      <a class="book-card book-ivory" href="frontend.html"><div class="book-cover"><b>前端基础</b><i class="book-triangles"></i></div><span>3 节</span><strong>→</strong></a>
+      <a class="book-card book-green" href="golang.html" data-notebook="go"><div class="book-cover"><b>Golang</b><i class="book-rings"></i></div><span>11 章</span><strong>→</strong></a>
+      <a class="book-card book-ivory" href="frontend.html" data-notebook="frontend"><div class="book-cover"><b>前端基础</b><i class="book-triangles"></i></div><span>3 节</span><strong>→</strong></a>
       <a class="book-card book-red empty-book" href="#" aria-label="C++，内容待添加"><div class="book-cover"><b>C++</b><i class="book-rings"></i></div><span>待添加</span><strong>→</strong></a>
       <a class="book-card book-green empty-book" href="#" aria-label="算法，内容待添加"><div class="book-cover"><b>算法</b><i class="book-dots"></i></div><span>待添加</span><strong>→</strong></a>
+    </div><div class="notebook-drawer" id="notebook-drawer" hidden>
+      <button class="drawer-close" type="button" aria-label="关闭章节目录">×</button>
+      <div class="drawer-book" aria-hidden="true"><b></b></div>
+      <div class="drawer-pages">
+        <div class="drawer-panel" data-panel="go">
+          <section><span>01</span><h3>语言基础</h3><a href="chapters/chapter-00.html">语言结构</a><a href="chapters/chapter-01.html">变量声明</a></section>
+          <section><span>02</span><h3>输入与类型</h3><a href="chapters/chapter-02.html">输入输出</a><a href="chapters/chapter-03.html">数据类型</a></section>
+          <section><span>03</span><h3>结构与流程</h3><a href="chapters/chapter-04.html">派生数据类型</a><a href="chapters/chapter-05.html">语句</a></section>
+          <section><span>04</span><h3>函数与方法</h3><a href="chapters/chapter-06.html">函数</a><a href="chapters/chapter-07.html">结构体与方法</a></section>
+          <section><span>05</span><h3>接口与并发</h3><a href="chapters/chapter-08.html">接口</a><a href="chapters/chapter-09.html">协程</a></section>
+          <section><span>06</span><h3>线程安全</h3><a href="chapters/chapter-10.html">线程安全</a><a class="view-all" href="golang.html">查看全部 →</a></section>
+        </div>
+        <div class="drawer-panel" data-panel="frontend" hidden>
+          <section><span>01</span><h3>DOM</h3><a href="frontend.html#dom">文档对象模型</a><a href="frontend.html#dom">DOM 常用方法</a></section>
+          <section><span>02</span><h3>属性</h3><a href="frontend.html#attributes">HTML 常用属性</a><a href="frontend.html#attributes">DOM 对象属性</a></section>
+          <section><span>03</span><h3>语法补漏</h3><a href="frontend.html#syntax">HTML、CSS 与 JS</a><a class="view-all" href="frontend.html">查看全部 →</a></section>
+        </div>
+      </div>
     </div></section>
     <section class="fragments-section"><div class="a-section-head"><div><p>KNOWLEDGE FRAGMENTS</p><h2>知识碎片</h2></div><span>JUST NOTES</span></div><div class="fragment-list"><a href="computer-basics.html"><time>2026.09.17</time><b>计算机基础：网络、系统与数据库</b><em>#基础</em><span>→</span></a><a href="chapters/10-concurrency.html"><time>2026.09.10</time><b>并发、协程与线程安全</b><em>#Golang</em><span>→</span></a><a href="frontend.html"><time>2026.09.01</time><b>DOM、CSS 与 JavaScript 基础</b><em>#前端</em><span>→</span></a></div></section>
     <section class="notes-section notes-b"><div class="section-heading"><div><p class="home-kicker">NOTEBOOKS</p><h2>学习笔记</h2></div><p>按主题整理，持续生长。</p></div><div class="notebook-grid">
@@ -24,5 +42,5 @@
     </div></section>
     <blockquote class="a-closing" id="blessing">陌生人，我也为你祝福：愿你有一个灿烂的前程；<br>愿你有情人终成眷属；愿你在尘世获得幸福。</blockquote>
     <footer class="home-footer"><span>© 2026 hyggeZ</span><span>保持好奇，持续记录。</span></footer>
-  </main><script src="script.js?v=20260917f"></script>
+  </main><script src="script.js?v=20260917h"></script>
 </body></html>
